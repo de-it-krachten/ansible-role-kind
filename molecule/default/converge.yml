@@ -1,0 +1,16 @@
+---
+
+- name: Converge
+  hosts: all
+  become: "yes"
+  vars:
+    python_package_install_optional: True
+    docker_compose_type: pip
+    kind_cluster_names: ['cluster1', 'cluster2']
+  roles:
+    - deitkrachten.python
+    - deitkrachten.docker
+  tasks:
+    - name: Include role 'ansible-role-kind'
+      ansible.builtin.include_role:
+        name: ansible-role-kind

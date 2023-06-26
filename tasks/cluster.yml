@@ -1,0 +1,14 @@
+---
+
+- name: Get all clusters present
+  ansible.builtin.command:
+    cmd: "{{ kind_path }} get clusters"
+  changed_when: false
+  register: __kind_clusters
+
+- name: Create kind cluster
+  ansible.builtin.command:
+    cmd: "{{ kind_path }} create cluster --name {{ item }}"
+  changed_when: true
+  loop: "{{ kind_cluster_names }}"
+  when: item is not in __kind_clusters.stdout_lines

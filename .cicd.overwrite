@@ -1,0 +1,39 @@
+---
+
+# Generic
+generic:
+  role: ansible-role-kind
+  role_short: kind
+  role_description: |
+    Installs & manages kind (Kubernetes in Docker)<br><br>
+    Project: https://kind.sigs.k8s.io<br>
+    Github: https://github.com/kubernetes-sigs/kind<br>
+  collections: []
+
+# Dependencies
+dependencies:
+  roles:
+    - deitkrachten.python
+    - deitkrachten.docker
+  collections: []
+
+# Molecule
+molecule:
+  requirements:
+    roles_extra:
+      - deitkrachten.python
+      - deitkrachten.docker
+  prepare:
+    vars:
+      activate_epel: true
+  converge:
+    vars:
+      python_package_install_optional: true
+      # pip_site_upgrade: true
+      docker_compose_type: pip
+      kind_cluster_names:
+        - cluster1
+        - cluster2
+    roles:
+      - deitkrachten.python
+      - deitkrachten.docker

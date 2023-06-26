@@ -1,0 +1,115 @@
+---
+
+- name: Lookup alternative system & architecture
+  ansible.builtin.set_fact:
+    kind_system: "{{ kind['system'][ansible_system] }}"
+    kind_architecture: "{{ kind['architecture'][ansible_architecture] | default(ansible_architecture) }}"
+
+- name: Get kind version installed
+  ansible.builtin.shell: |
+    set -o pipefail
+    kind --version | awk '{print $NF}'
+  args:
+    executable: /bin/bash
+  changed_when: no
+  failed_when: no
+  check_mode: no
+  register: kind_version_installed
+
+- name: Set installed version as fact
+  ansible.builtin.set_fact:
+    kind_version_installed: "{{ 'N/A' if kind_version_installed.stdout | length == 0 else 'v' + kind_version_installed.stdout }}"
+
+- name: Get latest kind release info
+  ansible.builtin.uri:
+    url: "{{ kind_api + '/releases/latest' }}"
+  check_mode: no
+  register: kind_version_info
+
+- name: Get latest release tag
+  ansible.builtin.set_fact:
+    kind_version_latest: "{{ kind_version_info.json.tag_name }}"
+
+- name: Replace 'latest' by the actual version
+  ansible.builtin.set_fact:
+    kind_version: "{{ kind_version_latest }}"
+  when: kind_version == 'latest'
+
+- name: Get all kind releases info
+  ansible.builtin.uri:
+    url: "{{ kind_api + '/releases?per_page=1000' }}"
+  check_mode: no
+  register: kind_version_info
+
+- name: Get version information
+  ansible.builtin.set_fact:
+    kind_version_info: "{{ kind_version_info.json | json_query(query) | first }}"
+  vars:
+    query: "[?tag_name=='{{ kind_version }}']"
+
+- name: Show kind release
+  ansible.builtin.debug:
+    msg:
+      - "kind latest release    : {{ kind_version_latest }}"
+      - "kind requested release : {{ kind_version }}"
+      - "kind installed release : {{ kind_version_installed }}"
+
+- name: Install/update kind
+  when: kind_version != kind_version_installed
+  block:
+
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+      changed_when: false
+      register: __tmpdir
+
+    - name: Get download location for binary/archive
+      ansible.builtin.set_fact:
+        kind_url: "{{ kind_version_info.assets | json_query(query) | first }}"
+      vars:
+        query: "[?name=='{{ kind_file }}'].browser_download_url"
+
+    - name: Download binary/archive
+      ansible.builtin.get_url:
+        url: "{{ kind_url }}"
+        dest: "{{ __tmpdir.path }}/"
+        mode: "0644"
+      changed_when: false
+
+    - name: Extract archive
+      when: kind_file is search('\.(zip|tar.gz|tgz|bz2)$')
+      block:
+
+        - name: Extract archive
+          ansible.builtin.unarchive:
+            src: "{{ __tmpdir.path }}/{{ kind_file }}"
+            dest: "{{ __tmpdir.path }}/"
+            remote_src: true
+          changed_when: false
+
+        - name: Copy binary from extracted archive
+          ansible.builtin.copy:
+            src: "{{ __tmpdir.path }}/kind-{{ kind_version }}/rancher"
+            dest: "{{ kind_path }}"
+            mode: "0555"
+            remote_src: true
+          become: yes
+
+    - name: Copy binary
+      when: kind_file is not search('\.(zip|tar.gz|tgz|bz2)$')
+      block:
+
+        - name: Copy binary to {{ kind_path }}
+          ansible.builtin.copy:
+            src: "{{ __tmpdir.path }}/{{ kind_file }}"
+            dest: "{{ kind_path }}"
+            mode: "0555"
+            remote_src: true
+          become: yes
+
+    - name: Cleanup temporary directory
+      ansible.builtin.file:
+        path: "{{ __tmpdir.path }}"
+        state: absent
+      changed_when: false
