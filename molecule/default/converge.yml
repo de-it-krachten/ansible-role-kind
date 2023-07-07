@@ -6,7 +6,7 @@
   vars:
     python_package_install_optional: True
     docker_compose_type: pip
-    kind_cluster_names: ['cluster1', 'cluster2']
+    kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]
   roles:
     - deitkrachten.python
     - deitkrachten.docker

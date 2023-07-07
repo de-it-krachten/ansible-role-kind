@@ -4,11 +4,40 @@
   ansible.builtin.command:
     cmd: "{{ kind_path }} get clusters"
   changed_when: false
+  become: yes
   register: __kind_clusters
+
+- name: Create kind cluster configuration
+  ansible.builtin.template:
+    src: templates/cluster.yml.j2
+    dest: /tmp/cluster-{{ item.name }}.yml
+    mode: "0644"
+  changed_when: false
+  loop: "{{ kind_cluster_names }}"
+  when: item.name is not in __kind_clusters.stdout_lines
 
 - name: Create kind cluster
   ansible.builtin.command:
-    cmd: "{{ kind_path }} create cluster --name {{ item }}"
+    cmd: >-
+      {{ kind_path }} create cluster
+        --name {{ item.name }}
+        --config /tmp/cluster-{{ item.name }}.yml
   changed_when: true
+  become: yes
   loop: "{{ kind_cluster_names }}"
-  when: item is not in __kind_clusters.stdout_lines
+  when: item.name is not in __kind_clusters.stdout_lines
+  environment:
+    HTTP_PROXY: "{{ docker_http_proxy | default('') }}"
+    HTTPS_PROXY: "{{ docker_https_proxy | default('') }}"
+    NO_PROXY: "{{ docker_no_proxy | default('') }}"
+    http_proxy: "{{ docker_http_proxy | default('') }}"
+    https_proxy: "{{ docker_https_proxy | default('') }}"
+    no_proxy: "{{ docker_no_proxy | default('') }}"
+
+- name: Delete kind cluster configuration files
+  ansible.builtin.file:
+    path: /tmp/cluster-{{ item.name }}.yml
+    state: absent
+  changed_when: false
+  loop: "{{ kind_cluster_names }}"
+  when: item.name is not in __kind_clusters.stdout_lines

@@ -4,6 +4,7 @@
 # ansible-role-kind
 
 Installs & manages kind (Kubernetes in Docker)<br><br>
+Optionally it can setup one or more clusters including the nginx ingress controller<br>
 Project: https://kind.sigs.k8s.io<br>
 Github: https://github.com/kubernetes-sigs/kind<br>
 
@@ -32,6 +33,8 @@ Supported platforms
 - OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
+- SUSE Linux Enterprise<sup>1</sup>
+- openSUSE Leap 15
 - Debian 10 (Buster)
 - Debian 11 (Bullseye)
 - Ubuntu 20.04 LTS
@@ -91,7 +94,7 @@ kind_cluster_names: []
   vars:
     python_package_install_optional: True
     docker_compose_type: pip
-    kind_cluster_names: ['cluster1', 'cluster2']
+    kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]
   roles:
     - deitkrachten.python
     - deitkrachten.docker

@@ -9,3 +9,10 @@
     file: cluster.yml
   when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker' or ansible_os_family != 'Debian'
 
+- name: Configure configuration for kubectl
+  ansible.builtin.include_tasks:
+    file: kubectl.yml
+
+- name: Setup ingress controller
+  ansible.builtin.include_tasks:
+    file: ingress.yml
