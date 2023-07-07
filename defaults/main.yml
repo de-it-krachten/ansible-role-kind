@@ -32,3 +32,20 @@ kind_mode: '0755'
 
 # List of clusters to create
 kind_cluster_names: []
+
+# Examples :
+# kind_cluster_names:
+# - name: cluster1
+#   ingress: true
+#   roles:
+#     - control-plane
+#     - worker
+#     - worker
+# - name: cluster2
+#   template: templates/kind/cluster1.yml.j2
+
+# OS packages
+kind_os_packages: []
+kind_pip_packages:
+  - kubernetes
+  # - "oauthlib==3.2.2"

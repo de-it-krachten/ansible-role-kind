@@ -700,6 +700,7 @@ molecule:
       systemctl_alternative: false
   requirements:
     roles:
+      - deitkrachten.docker
       - deitkrachten.epel
       - deitkrachten.facts
       - deitkrachten.firewall

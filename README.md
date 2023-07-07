@@ -18,6 +18,8 @@ Github: https://github.com/kubernetes-sigs/kind<br>
 
 #### Collections
 - community.general
+- kubernetes.core
+- kubernetes.core
 
 ## Platforms
 
@@ -26,7 +28,6 @@ Supported platforms
 - Red Hat Enterprise Linux 7<sup>1</sup>
 - Red Hat Enterprise Linux 8<sup>1</sup>
 - Red Hat Enterprise Linux 9<sup>1</sup>
-- CentOS 7
 - RockyLinux 8
 - RockyLinux 9
 - OracleLinux 8
@@ -34,7 +35,7 @@ Supported platforms
 - AlmaLinux 8
 - AlmaLinux 9
 - SUSE Linux Enterprise<sup>1</sup>
-- openSUSE Leap 15
+- openSUSE Leap 15<sup>1</sup>
 - Debian 10 (Buster)
 - Debian 11 (Bullseye)
 - Ubuntu 20.04 LTS
@@ -80,6 +81,12 @@ kind_mode: '0755'
 
 # List of clusters to create
 kind_cluster_names: []
+
+# OS packages
+kind_os_packages: []
+kind_pip_packages:
+  - kubernetes
+  # - "oauthlib==3.2.2"
 </pre></code>
 
 
@@ -96,8 +103,7 @@ kind_cluster_names: []
     docker_compose_type: pip
     kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]
   roles:
-    - deitkrachten.python
-    - deitkrachten.docker
+    - deitkrachten.kubectl
   tasks:
     - name: Include role 'kind'
       ansible.builtin.include_role:

@@ -1,0 +1,16 @@
+---
+
+- name: Install OS packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop: "{{ kind_os_packages }}"
+
+- name: Install python packages
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop: "{{ kind_pip_packages }}"
+  tags: molecule-idempotence-notest
