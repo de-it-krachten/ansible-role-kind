@@ -16,17 +16,31 @@ dependencies:
   roles:
     - deitkrachten.python
     - deitkrachten.docker
-  collections: []
+  collections:
+    - kubernetes.core
+
+# Supported platforms
+platforms:
+  centos7:
+    ci: false
+    supported: false
+  opensuse15:
+    ci: false
+    supported: true
 
 # Molecule
 molecule:
   requirements:
     roles_extra:
-      - deitkrachten.python
       - deitkrachten.docker
+      - deitkrachten.kubectl
   prepare:
     vars:
       activate_epel: true
+      install_python: true
+      install_python38: true
+      packages_rm:
+        - python3-pyyaml
   converge:
     vars:
       python_package_install_optional: true
@@ -38,5 +52,5 @@ molecule:
           roles:
             - control-plane
     roles:
-      - deitkrachten.python
       - deitkrachten.docker
+      - deitkrachten.kubectl

@@ -2,8 +2,8 @@
 
 - name: Define user & home
   ansible.builtin.set_fact:
-    kube_user: "{{ ansible_user }}"
-    kube_home: "{{ ansible_local['users_ext'][ansible_user]['home'] }}"
+    kube_user: "{{ ansible_user_id }}"
+    kube_home: "{{ ansible_local['users_ext'][ansible_user_id]['home'] }}"
 
 - name: Setup kubeconfig directory
   ansible.builtin.file:

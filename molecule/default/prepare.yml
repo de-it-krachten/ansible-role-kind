@@ -43,6 +43,9 @@
 
     systemctl_alternative: False
     activate_epel: True
+    install_python: True
+    install_python38: True
+    packages_rm: ['python3-pyyaml']
   roles:
     - deitkrachten.facts
     - deitkrachten.showinfo
@@ -102,6 +105,14 @@
             user: root
             state: present
             key: "{{ root_pubkey }}"
+
+    - name: Generic
+      block:
+
+        - name: Remove packages known to make CI fail
+          ansible.builtin.package:
+            name: "{{ packages_rm | default([]) }}"
+            state: absent
 
     - name: Family Debian
       when: ansible_os_family == 'Debian'

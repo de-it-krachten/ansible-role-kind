@@ -10,8 +10,5 @@
   kubernetes.core.k8s:
     state: present
     src: /tmp/ingress.yml
-    # wait: true
-    # wait_condition:
-    #   type: pod 
   loop: "{{ kind_cluster_names }}"
   when: item.ingress | bool
