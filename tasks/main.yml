@@ -1,11 +1,25 @@
 ---
 
+- name: Prepare system for ansible
+  ansible.builtin.include_tasks:
+    file: prepare.yml
+
 - name: Install kind binary
   ansible.builtin.include_tasks:
     file: binary.yml
 
 - name: Setup kind cluster
-  ansible.builtin.include_tasks:
-    file: cluster.yml
   when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker' or ansible_os_family != 'Debian'
+  block:
 
+    - name: Setup kind cluster
+      ansible.builtin.include_tasks:
+        file: cluster.yml
+
+    - name: Configure configuration for kubectl
+      ansible.builtin.include_tasks:
+        file: kubectl.yml
+
+    - name: Setup ingress controller
+      ansible.builtin.include_tasks:
+        file: ingress.yml

@@ -6,6 +6,7 @@ generic:
   role_short: kind
   role_description: |
     Installs & manages kind (Kubernetes in Docker)<br><br>
+    Optionally it can setup one or more clusters including the nginx ingress controller<br>
     Project: https://kind.sigs.k8s.io<br>
     Github: https://github.com/kubernetes-sigs/kind<br>
   collections: []
@@ -15,25 +16,41 @@ dependencies:
   roles:
     - deitkrachten.python
     - deitkrachten.docker
-  collections: []
+  collections:
+    - kubernetes.core
+
+# Supported platforms
+platforms:
+  centos7:
+    ci: false
+    supported: false
+  opensuse15:
+    ci: false
+    supported: true
 
 # Molecule
 molecule:
   requirements:
     roles_extra:
-      - deitkrachten.python
       - deitkrachten.docker
+      - deitkrachten.kubectl
   prepare:
     vars:
       activate_epel: true
+      install_python: true
+      install_python38: true
+      packages_rm:
+        - python3-pyyaml
   converge:
     vars:
       python_package_install_optional: true
       # pip_site_upgrade: true
       docker_compose_type: pip
       kind_cluster_names:
-        - cluster1
-        - cluster2
+        - name: cluster1
+          ingress: true
+          roles:
+            - control-plane
     roles:
-      - deitkrachten.python
       - deitkrachten.docker
+      - deitkrachten.kubectl

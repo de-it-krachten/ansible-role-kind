@@ -1,0 +1,24 @@
+---
+
+- name: Define user & home
+  ansible.builtin.set_fact:
+    kube_user: "{{ ansible_user_id }}"
+    kube_home: "{{ ansible_local['users_ext'][ansible_user_id]['home'] }}"
+
+- name: Setup kubeconfig directory
+  ansible.builtin.file:
+    path: "{{ kube_home }}/.kube"
+    owner: "{{ kube_user }}"
+    group: "{{ kube_user }}"
+    state: directory
+    mode: "0700"
+
+- name: Copy kubeconfig to ansible user
+  ansible.builtin.copy:
+    src: "{{ ansible_local['users_ext']['root']['home'] }}/.kube/config"
+    dest: "{{ kube_home }}/.kube/config"
+    owner: "{{ kube_user }}"
+    group: "{{ kube_user }}"
+    mode: "0600"
+    remote_src: yes
+  become: yes

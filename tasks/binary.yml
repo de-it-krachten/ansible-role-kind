@@ -8,7 +8,7 @@
 - name: Get kind version installed
   ansible.builtin.shell: |
     set -o pipefail
-    kind --version | awk '{print $NF}'
+    {{ kind_path }} --version | awk '{print $NF}'
   args:
     executable: /bin/bash
   changed_when: no

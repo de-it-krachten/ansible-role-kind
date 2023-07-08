@@ -32,3 +32,9 @@ kind_mode: '0755'
 
 # List of clusters to create
 kind_cluster_names: []
+
+# OS packages
+kind_os_packages: []
+kind_pip_packages:
+  - kubernetes
+  # - "oauthlib==3.2.2"

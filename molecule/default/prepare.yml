@@ -38,8 +38,14 @@
       - rocky9
       - almalinux8
       - almalinux9
+      - sles15
+      - opensuse15
+
     systemctl_alternative: False
     activate_epel: True
+    install_python: True
+    install_python38: True
+    packages_rm: ['python3-pyyaml']
   roles:
     - deitkrachten.facts
     - deitkrachten.showinfo
@@ -56,6 +62,8 @@
         molecule_distro: >-
           {%- if ansible_distribution == 'Ubuntu' -%}
           {{ (ansible_distribution | lower) + (ansible_distribution_version | regex_replace('\.')) }}
+          {%- elif ansible_distribution == 'openSUSE Leap' -%}
+          {{ 'opensuse' + ansible_distribution_major_version }}
           {%- elif ansible_distribution == 'CentOS' and ansible_distribution_release == 'Stream' -%}
           {{ (ansible_distribution | lower) + ansible_distribution_major_version + 's' }}
           {%- else -%}
@@ -97,6 +105,14 @@
             user: root
             state: present
             key: "{{ root_pubkey }}"
+
+    - name: Generic
+      block:
+
+        - name: Remove packages known to make CI fail
+          ansible.builtin.package:
+            name: "{{ packages_rm | default([]) }}"
+            state: absent
 
     - name: Family Debian
       when: ansible_os_family == 'Debian'

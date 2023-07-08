@@ -49,3 +49,7 @@ roles:
     src: https://github.com/de-it-krachten/ansible-role-docker.git
     version: main
     scm: git
+  - name: deitkrachten.kubectl
+    src: https://github.com/de-it-krachten/ansible-role-kubectl.git
+    version: main
+    scm: git

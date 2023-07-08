@@ -1,0 +1,14 @@
+---
+
+- name: Download ingress configuration
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+    dest: /tmp/ingress.yml
+    mode: "0644"
+
+- name: Setup ingress for each cluster
+  kubernetes.core.k8s:
+    state: present
+    src: /tmp/ingress.yml
+  loop: "{{ kind_cluster_names }}"
+  when: item.ingress | bool
