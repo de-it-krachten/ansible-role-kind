@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.1.0...v1.2.0) (2023-07-10)
+
+
+### Features
+
+* Add support for nginx ingress controller ([e0e08c1](https://github.com/de-it-krachten/ansible-role-kind/commit/e0e08c159aa875e4554a0cd4b217f3447ecadd49))
+
 # [1.1.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.0.0...v1.1.0) (2023-07-08)
 
 
