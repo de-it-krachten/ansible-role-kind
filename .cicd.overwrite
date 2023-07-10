@@ -32,11 +32,11 @@ platforms:
 molecule:
   requirements:
     roles_extra:
-      - deitkrachten.docker
       - deitkrachten.kubectl
   prepare:
     vars:
       activate_epel: true
+      install_docker: true
       install_python: true
       install_python38: true
       packages_rm:
@@ -52,5 +52,4 @@ molecule:
           roles:
             - control-plane
     roles:
-      - deitkrachten.docker
       - deitkrachten.kubectl

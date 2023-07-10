@@ -7,14 +7,44 @@
   become: yes
   register: __kind_clusters
 
-- name: Create kind cluster configuration
+- name: Delete any configuration files that may exists
+  ansible.builtin.file:
+    path: /tmp/cluster-{{ item.name }}.yml
+    state: absent
+  become: yes
+  changed_when: false
+  loop: "{{ kind_cluster_names }}"
+  loop_control:
+    label:
+      - /tmp/cluster-{{ item.name }}.yml
+
+- name: Create kind cluster configuration (default)
   ansible.builtin.template:
     src: templates/cluster.yml.j2
     dest: /tmp/cluster-{{ item.name }}.yml
     mode: "0644"
   changed_when: false
   loop: "{{ kind_cluster_names }}"
-  when: item.name is not in __kind_clusters.stdout_lines
+  loop_control:
+    label:
+      - /tmp/cluster-{{ item.name }}.yml
+  when:
+    - item.name is not in __kind_clusters.stdout_lines
+    - item.template is undefined or item.template | length == 0
+
+- name: Create kind cluster configuration (custom)
+  ansible.builtin.template:
+    src: "{{ item.template }}"
+    dest: /tmp/cluster-{{ item.name }}.yml
+    mode: "0644"
+  changed_when: false
+  loop: "{{ kind_cluster_names }}"
+  loop_control:
+    label:
+      - /tmp/cluster-{{ item.name }}.yml
+  when:
+    - item.name is not in __kind_clusters.stdout_lines
+    - item.template is defined and item.template | length > 0
 
 - name: Create kind cluster
   ansible.builtin.command:
@@ -40,4 +70,6 @@
     state: absent
   changed_when: false
   loop: "{{ kind_cluster_names }}"
-  when: item.name is not in __kind_clusters.stdout_lines
+  loop_control:
+    label:
+      - /tmp/cluster-{{ item.name }}.yml

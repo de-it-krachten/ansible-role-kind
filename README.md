@@ -82,6 +82,17 @@ kind_mode: '0755'
 # List of clusters to create
 kind_cluster_names: []
 
+# Examples :
+# kind_cluster_names:
+# - name: cluster1
+#   ingress: true
+#   roles:
+#     - control-plane
+#     - worker
+#     - worker
+# - name: cluster2
+#   template: templates/kind/cluster1.yml.j2
+
 # OS packages
 kind_os_packages: []
 kind_pip_packages:
@@ -103,7 +114,6 @@ kind_pip_packages:
     docker_compose_type: pip
     kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]
   roles:
-    - deitkrachten.docker
     - deitkrachten.kubectl
   tasks:
     - name: Include role 'kind'

@@ -8,7 +8,6 @@
     docker_compose_type: pip
     kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]
   roles:
-    - deitkrachten.docker
     - deitkrachten.kubectl
   tasks:
     - name: Include role 'ansible-role-kind'
