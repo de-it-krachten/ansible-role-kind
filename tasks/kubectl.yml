@@ -2,23 +2,23 @@
 
 - name: Define user that will control k8s
   ansible.builtin.set_fact:
-    kube_user: "{{ ansible_user_id }}"
-  when: kube_user is undefined
+    kind_user: "{{ ansible_user_id }}"
+  when: kind_user is undefined
 
 - name: Setup kubeconfig directory
   ansible.builtin.file:
-    path: "{{ ansible_local['users_ext'][kube_user]['home'] }}/.kube"
-    owner: "{{ kube_user }}"
-    group: "{{ kube_user }}"
+    path: "{{ ansible_local['users_ext'][kind_user]['home'] }}/.kube"
+    owner: "{{ kind_user }}"
+    group: "{{ kind_user }}"
     state: directory
     mode: "0700"
 
 - name: Copy kubeconfig to ansible user
   ansible.builtin.copy:
     src: "{{ ansible_local['users_ext']['root']['home'] }}/.kube/config"
-    dest: "{{ ansible_local['users_ext'][kube_user]['home'] }}/.kube/config"
-    owner: "{{ kube_user }}"
-    group: "{{ kube_user }}"
+    dest: "{{ ansible_local['users_ext'][kind_user]['home'] }}/.kube/config"
+    owner: "{{ kind_user }}"
+    group: "{{ kind_user }}"
     mode: "0600"
     remote_src: yes
   become: yes
