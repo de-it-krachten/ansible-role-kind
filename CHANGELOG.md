@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.2.0...v1.2.1) (2023-07-12)
+
+
+### Bug Fixes
+
+* Change variale 'kube_user' -> 'kind_user' ([63ef483](https://github.com/de-it-krachten/ansible-role-kind/commit/63ef483a4ad4c6a6e1092facf8f4f7be49854187))
+
 # [1.2.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.1.0...v1.2.0) (2023-07-10)
 
 
