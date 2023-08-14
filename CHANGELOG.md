@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.2.1...v1.3.0) (2023-08-14)
+
+
+### Features
+
+* Update supported platforms & CI ([38b63b4](https://github.com/de-it-krachten/ansible-role-kind/commit/38b63b4234c606f3d6ec4d12e29df2f446fd8300))
+
 ## [1.2.1](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.2.0...v1.2.1) (2023-07-12)
 
 
