@@ -15,8 +15,7 @@
   changed_when: false
   loop: "{{ kind_cluster_names }}"
   loop_control:
-    label:
-      - /tmp/cluster-{{ item.name }}.yml
+    label: /tmp/cluster-{{ item.name }}.yml
 
 - name: Create kind cluster configuration (default)
   ansible.builtin.template:
@@ -26,8 +25,7 @@
   changed_when: false
   loop: "{{ kind_cluster_names }}"
   loop_control:
-    label:
-      - /tmp/cluster-{{ item.name }}.yml
+    label: /tmp/cluster-{{ item.name }}.yml
   when:
     - item.name is not in __kind_clusters.stdout_lines
     - item.template is undefined or item.template | length == 0
@@ -40,8 +38,7 @@
   changed_when: false
   loop: "{{ kind_cluster_names }}"
   loop_control:
-    label:
-      - /tmp/cluster-{{ item.name }}.yml
+    label: /tmp/cluster-{{ item.name }}.yml
   when:
     - item.name is not in __kind_clusters.stdout_lines
     - item.template is defined and item.template | length > 0
@@ -71,5 +68,4 @@
   changed_when: false
   loop: "{{ kind_cluster_names }}"
   loop_control:
-    label:
-      - /tmp/cluster-{{ item.name }}.yml
+    label: /tmp/cluster-{{ item.name }}.yml

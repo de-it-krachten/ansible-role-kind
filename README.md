@@ -17,7 +17,6 @@ Github: https://github.com/kubernetes-sigs/kind<br>
 - deitkrachten.docker
 
 #### Collections
-- community.general
 - kubernetes.core
 - kubernetes.core
 
@@ -36,7 +35,6 @@ Supported platforms
 - AlmaLinux 9
 - SUSE Linux Enterprise 15<sup>1</sup>
 - openSUSE Leap 15<sup>1</sup>
-- Debian 10 (Buster)<sup>1</sup>
 - Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
@@ -109,11 +107,15 @@ kind_pip_packages:
 <pre><code>
 - name: sample playbook for role 'kind'
   hosts: all
-  become: "yes"
+  become: 'yes'
   vars:
-    python_package_install_optional: True
+    python_package_install_optional: true
     docker_compose_type: pip
-    kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]
+    kind_cluster_names:
+      - name: cluster1
+        ingress: true
+        roles:
+          - control-plane
   roles:
     - deitkrachten.kubectl
   tasks:
