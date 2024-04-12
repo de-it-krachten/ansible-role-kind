@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.3.0...v1.3.1) (2024-04-12)
+
+
+### Bug Fixes
+
+* Change loop/label for latest ansible ([956cb72](https://github.com/de-it-krachten/ansible-role-kind/commit/956cb72bf5b554e8f7703c74a459c081b604956a))
+
 # [1.3.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.2.1...v1.3.0) (2023-08-14)
 
 
