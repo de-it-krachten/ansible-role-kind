@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.3.1...v1.4.0) (2024-06-03)
+
+
+### Features
+
+* Add support for Ubuntu 24.04 LTS + Fedora 40 ([9fde335](https://github.com/de-it-krachten/ansible-role-kind/commit/9fde3353133a80da0b003807389e478ac7faf0a1))
+
 ## [1.3.1](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.3.0...v1.3.1) (2024-04-12)
 
 
