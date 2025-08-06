@@ -43,9 +43,9 @@
 
 - name: Get version information
   ansible.builtin.set_fact:
-    kind_version_info: "{{ kind_version_info.json | json_query(query) | first }}"
+    kind_version_info: "{{ kind_version_info.json | json_query(qq) | first }}"
   vars:
-    query: "[?tag_name=='{{ kind_version }}']"
+    qq: "[?tag_name=='{{ kind_version }}']"
 
 - name: Show kind release
   ansible.builtin.debug:
@@ -66,9 +66,9 @@
 
     - name: Get download location for binary/archive
       ansible.builtin.set_fact:
-        kind_url: "{{ kind_version_info.assets | json_query(query) | first }}"
+        kind_url: "{{ kind_version_info.assets | json_query(qq) | first }}"
       vars:
-        query: "[?name=='{{ kind_file }}'].browser_download_url"
+        qq: "[?name=='{{ kind_file }}'].browser_download_url"
 
     - name: Download binary/archive
       ansible.builtin.get_url:
