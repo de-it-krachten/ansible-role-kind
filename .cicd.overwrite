@@ -38,7 +38,6 @@ molecule:
       activate_epel: true
       install_docker: true
       install_python: true
-      install_python38: true
       packages_rm:
         - python3-pyyaml
   converge:

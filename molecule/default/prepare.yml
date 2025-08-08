@@ -47,7 +47,6 @@
     activate_epel: True
     install_docker: True
     install_python: True
-    install_python38: True
     packages_rm: ['python3-pyyaml']
   roles:
     - { role: deitkrachten.facts, when: ansible_os_family != 'Windows' }
