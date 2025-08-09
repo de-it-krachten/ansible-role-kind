@@ -1,3 +1,14 @@
+# [1.6.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.5.0...v1.6.0) (2025-08-09)
+
+
+### Features
+
+* Add support for AlmaLinux 10 ([dbcf699](https://github.com/de-it-krachten/ansible-role-kind/commit/dbcf6999a2d3ff95f3e1a7ca788a8de45efed30e))
+* Add support for Debian 13 (Trixie) ([612147a](https://github.com/de-it-krachten/ansible-role-kind/commit/612147a89d7b19468489b29fcba5c427975454f8))
+* Add support for OracleLinux 10 ([f4e5a14](https://github.com/de-it-krachten/ansible-role-kind/commit/f4e5a14d413ab14a29359558a2889f023204288a))
+* Add support for Red Hat Enterprise Linux 10 ([1247044](https://github.com/de-it-krachten/ansible-role-kind/commit/12470445688dedbe65ad1b7f1a078b84debec92d))
+* Add support for RockyLinux 10 ([e5b0327](https://github.com/de-it-krachten/ansible-role-kind/commit/e5b03270b9b1b25f4386595e5bb9c19f50662ea3))
+
 # [1.5.0](https://github.com/de-it-krachten/ansible-role-kind/compare/v1.4.0...v1.5.0) (2024-12-29)
 
 
