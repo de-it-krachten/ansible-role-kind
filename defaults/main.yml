@@ -45,7 +45,6 @@ kind_cluster_names: []
 #   template: templates/kind/cluster1.yml.j2
 
 # OS packages
-kind_os_packages: []
-kind_pip_packages:
-  - kubernetes
-  # - "oauthlib==3.2.2"
+kind_os_packages:
+  - python3-kubernetes
+kind_pip_packages: []
