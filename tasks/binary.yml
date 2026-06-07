@@ -2,8 +2,8 @@
 
 - name: Lookup alternative system & architecture
   ansible.builtin.set_fact:
-    kind_system: "{{ kind['system'][ansible_system] }}"
-    kind_architecture: "{{ kind['architecture'][ansible_architecture] | default(ansible_architecture) }}"
+    kind_system: "{{ kind['system'][ansible_facts.system] }}"
+    kind_architecture: "{{ kind['architecture'][ansible_facts.architecture] | default(ansible_facts.architecture) }}"
 
 - name: Get kind version installed
   ansible.builtin.shell: |
