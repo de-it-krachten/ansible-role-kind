@@ -11,6 +11,12 @@ generic:
     Github: https://github.com/kubernetes-sigs/kind<br>
   collections: []
 
+# Supported platforms
+platforms:
+  ubuntu2004:
+    supported: true
+    ci: true
+
 # Dependencies
 dependencies:
   roles:
@@ -18,15 +24,6 @@ dependencies:
     - deitkrachten.docker
   collections:
     - kubernetes.core
-
-# Supported platforms
-platforms:
-  centos7:
-    ci: false
-    supported: false
-  opensuse15:
-    ci: false
-    supported: true
 
 # Molecule
 molecule:

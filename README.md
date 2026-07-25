@@ -13,11 +13,10 @@ Github: https://github.com/kubernetes-sigs/kind<br>
 ## Dependencies
 
 #### Roles
-- deitkrachten.python
 - deitkrachten.docker
+- deitkrachten.python
 
 #### Collections
-- kubernetes.core
 - kubernetes.core
 
 ## Platforms
@@ -36,19 +35,19 @@ Supported platforms
 - AlmaLinux 8
 - AlmaLinux 9
 - AlmaLinux 10
-- SUSE Linux Enterprise 15<sup>1</sup>
-- openSUSE Leap 15<sup>1</sup>
 - Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Debian 13 (Trixie)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
 - Ubuntu 24.04 LTS
-- Fedora 41
-- Fedora 42
+- Ubuntu 26.04 LTS
+- Fedora 43
+- Fedora 44<sup>1</sup>
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
+
 
 ## Role Variables
 ### defaults/main.yml
@@ -113,6 +112,7 @@ kind_pip_packages: []
   hosts: all
   become: 'yes'
   vars:
+    molecule_driver: '{{ lookup(''env'', ''MOLECULE_DRIVER_NAME'') }}'
     python_package_install_optional: true
     docker_compose_type: pip
     kind_cluster_names:
