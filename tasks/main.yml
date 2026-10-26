@@ -9,7 +9,7 @@
     file: binary.yml
 
 - name: Setup kind cluster
-  when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker' or ansible_os_family != 'Debian'
+  when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker' or ansible_facts.os_family != 'Debian'
   block:
 
     - name: Setup kind cluster
