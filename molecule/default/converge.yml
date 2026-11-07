@@ -4,6 +4,7 @@
   hosts: all
   become: "yes"
   vars:
+    molecule_driver: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
     python_package_install_optional: True
     docker_compose_type: pip
     kind_cluster_names: [{'name': 'cluster1', 'ingress': True, 'roles': ['control-plane']}]

@@ -1,5 +1,4 @@
 ---
-
 galaxy_info:
   role_name: kind
   namespace: de_it_krachten
@@ -14,12 +13,8 @@ galaxy_info:
         - '8'
         - '9'
         - '10'
-    - name: opensuse
-      versions:
-        - all
     - name: Debian
       versions:
-        - bullseye
         - bookworm
         - trixie
     - name: Ubuntu
